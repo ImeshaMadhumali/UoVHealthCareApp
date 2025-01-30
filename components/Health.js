@@ -2,8 +2,24 @@ import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { Card, Divider, PaperProvider, Text } from "react-native-paper";
 import { healthTracks } from "./StudentsDb";
 export default function Health({route}){
+    console.log("Received params in Health.js:", route.params);
     const { sid,sname } = route.params;
-    const healthRecord = healthTracks.filter((healthTrack)=>{return healthTrack.student_id == sid})[0];
+    const healthRecord = healthTracks.find((healthTrack) => healthTrack.student_id == sid);
+
+if (!healthRecord) {
+    console.log("No health record found for student ID:", sid);
+    return (
+        <PaperProvider>
+            <ScrollView contentContainerStyle={styles.scrollView}>
+                <View style={styles.container}>
+                    <Text style={{ color: 'red', textAlign: 'center', marginTop: 20 }}>
+                        No health record found for this student.
+                    </Text>
+                </View>
+            </ScrollView>
+        </PaperProvider>
+    );
+}
     //console.log(healthRecord)
     return (
         <PaperProvider>

@@ -12,8 +12,10 @@ export default function Home() {
     const validate = () => {
         const result = students.filter((student) => { return student.username === usname && student.password === pwd })
         if (result.length == 1) {
+            console.log("Navigating with student data:", result[0]);
             setMsg("");
-            navigation.navigate('profiletap',{student: result[0] });
+            navigation.navigate('profiletap', { sid: result[0].id, sname: result[0].name });
+
         } else {
             setMsg("error");
         }
